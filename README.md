@@ -1,15 +1,14 @@
-husky
-=====
+# husky
+## Version
+* Our `irg` branches are based on the [`indigo-devel` branch of `husky`](https://github.com/husky/husky) and the [`indigo-devel` branch of `husky_simulator`](https://github.com/husky/husky_simulator)
+    - Note that the newest release, e.g. [0.3.0 of `husky`](https://github.com/husky/husky/releases) is for ROS Kinetic
 
-Common ROS packages for the Clearpath Husky, useable for both simulation and
-real robot operation.
+## Tutorials
+* http://www.clearpathrobotics.com/assets/guides/ros/Getting%20Started%20with%20Ubuntu.html
 
- - husky_control : Control configuration
- - husky_description : Robot description (URDF)
- - husky_msgs : Message definitions
- - husky_navigation : Navigation configurations and demos
- - husky_ur5_moveit_config : MoveIt configuration and demos
 
-For Husky instructions and tutorials, please see [Robots/Husky](http://wiki.ros.org/Robots/Husky).
-
-To create a custom Husky description or simulation, please fork [husky_customization](https://github.com/husky/husky_customization).
+## Navigation
+- `roslaunch husky_gazebo husky_empty_world.launch`
+- `roslaunch husky_viz view_robot.launch`
+- `roslaunch husky_navigation move_base_mapless_demo.launch`
+- Use `2D navigation goal` in RVIZ

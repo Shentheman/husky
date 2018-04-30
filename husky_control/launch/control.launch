@@ -1,19 +1,46 @@
 <?xml version="1.0"?>
 <launch>
 
-  <rosparam command="load" file="$(find husky_control)/config/control.yaml" />
+  <!-- <rosparam command="load" file="$(find husky_control)/config/control.yaml" /> -->
+  <rosparam command="load" file="$(find husky_control)/config/control2.yaml" ns="xxxxx" />
+  <rosparam command="load" file="$(find husky_control)/config/control1.yaml" ns="xxxxx"/>
 
-  <node name="base_controller_spawner" pkg="controller_manager" type="spawner" args="husky_joint_publisher husky_velocity_controller --shutdown-timeout 3"/>
+  <group ns="/xxxxx">
+  <node name="base_controller_spawner1" pkg="controller_manager" type="spawner" args="husky_velocity_controller --shutdown-timeout 3"/>
+</group>
+
+  <group ns="/xxxxx">
+  <node name="base_controller_spawner2" pkg="controller_manager" type="spawner" args="husky_joint_publisher --shutdown-timeout 3"/>
+</group>
+
+
+
+
+
+  <!-- publish $(arg namespace_with_slash)/joint_states to /joint_states -->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="husky_joint_state_publisher" output="screen">
+    <remap from="robot_description" to="/robot_description"/>
+    <remap from="joint_states" to="/joint_states"/>
+    <rosparam param="/source_list" subst_value="true">[/xxxxx/joint_states]</rosparam>
+  </node>
+
+
+
+
+
+
+  <group ns="/xxxxx">
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
     <rosparam command="load" file="$(find husky_control)/config/localization.yaml" />
   </node>
+</group>
 
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen"/>
 
   <node pkg="twist_mux" type="twist_mux" name="twist_mux">
     <rosparam command="load" file="$(find husky_control)/config/twist_mux.yaml" />
-    <remap from="cmd_vel_out" to="husky_velocity_controller/cmd_vel"/>
+    <remap from="cmd_vel_out" to="/xxxxx/husky_velocity_controller/cmd_vel"/>
   </node>
 
 </launch>
