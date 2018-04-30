@@ -12,9 +12,7 @@
 
 
   <group ns="$(arg namespace_with_slash)">
-    <node name="base_controller_spawner1" pkg="controller_manager" type="spawner" args="husky_velocity_controller --shutdown-timeout 3"/>
-
-    <node name="base_controller_spawner2" pkg="controller_manager" type="spawner" args="husky_joint_publisher --shutdown-timeout 3"/>
+    <node name="base_controller_spawner" pkg="controller_manager" type="spawner" args="husky_joint_publisher husky_velocity_controller --shutdown-timeout 3"/>
   </group>
 
 
