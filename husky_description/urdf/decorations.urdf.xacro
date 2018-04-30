@@ -25,10 +25,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 -->
 <robot name="husky_decorations" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="husky_decorate">
+  <xacro:macro name="husky_decorate" params="extra_prefix" >
 
     <!-- Spawn Husky chassis -->
-    <link name="top_chassis_link">
+    <link name="${extra_prefix}top_chassis_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -38,14 +38,14 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     </link>
 
     <!-- Attach chassis to the robot -->
-    <joint name="top_chassis_joint" type="fixed">
-      <parent link="base_link" />
-      <child link="top_chassis_link" />
+    <joint name="${extra_prefix}top_chassis_joint" type="fixed">
+      <parent link="${extra_prefix}base_link" />
+      <child link="${extra_prefix}top_chassis_link" />
     </joint>
 
     <xacro:if value="$(optenv HUSKY_USER_RAIL_ENABLED true)">
       <!-- Spawn user rails -->
-      <link name="user_rail_link">
+      <link name="${extra_prefix}user_rail_link">
         <visual>
           <geometry>
             <mesh filename="package://husky_description/meshes/user_rail.dae" />
@@ -54,16 +54,16 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </link>
 
       <!-- Attach user rails to base link -->
-      <joint name="user_rail" type="fixed">
+      <joint name="${extra_prefix}user_rail" type="fixed">
         <origin xyz="0.272 0 0.245" rpy="0 0 0" />
-        <parent link="base_link" />
-        <child link="user_rail_link" />
+        <parent link="${extra_prefix}base_link" />
+        <child link="${extra_prefix}user_rail_link" />
       </joint>
     </xacro:if>
 
     <xacro:if value="$(optenv HUSKY_FRONT_BUMPER_ENABLED true)">
       <!-- Spawn front bumper link -->
-      <link name="front_bumper_link">
+      <link name="${extra_prefix}front_bumper_link">
         <visual>
           <geometry>
             <mesh filename="package://husky_description/meshes/bumper.dae" />
@@ -72,16 +72,16 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </link>
 
       <!-- Attach front bumper -->
-      <joint name="front_bumper" type="fixed">
+      <joint name="${extra_prefix}front_bumper" type="fixed">
         <origin xyz="0.48 0 0.091" rpy="0 0 0" />
-        <parent link="base_link" />
-        <child link="front_bumper_link" />
+        <parent link="${extra_prefix}base_link" />
+        <child link="${extra_prefix}front_bumper_link" />
       </joint>
     </xacro:if>
 
     <xacro:if value="$(optenv HUSKY_REAR_BUMPER_ENABLED true)">
       <!-- Spawn rear bumper link -->
-      <link name="rear_bumper_link">
+      <link name="${extra_prefix}rear_bumper_link">
         <visual>
           <geometry>
             <mesh filename="package://husky_description/meshes/bumper.dae" />
@@ -90,17 +90,17 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </link>
 
       <!-- Attach rear bumper -->
-      <joint name="rear_bumper" type="fixed">
+      <joint name="${extra_prefix}rear_bumper" type="fixed">
         <origin xyz="-0.48 0 0.091" rpy="0 0 ${M_PI}" />
-        <parent link="base_link" />
-        <child link="rear_bumper_link" />
+        <parent link="${extra_prefix}base_link" />
+        <child link="${extra_prefix}rear_bumper_link" />
       </joint>
     </xacro:if>
 
     <xacro:if value="$(optenv HUSKY_TOP_PLATE_ENABLED true)">
       <!-- Spawn the top plate -->
       <xacro:if value="$(optenv HUSKY_LARGE_TOP_PLATE false)">
-        <link name="top_plate_link">
+        <link name="${extra_prefix}top_plate_link">
           <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -121,15 +121,15 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
           </collision>
         </link>
         <!-- Attach top plate -->
-        <joint name="top_plate_joint" type="fixed">
-          <parent link="base_link" />
-          <child link="top_plate_link"/>
+        <joint name="${extra_prefix}top_plate_joint" type="fixed">
+          <parent link="${extra_prefix}base_link" />
+          <child link="${extra_prefix}top_plate_link"/>
           <origin xyz="0.0812 0 0.225" rpy="0 0 0"/>
         </joint>
       </xacro:if>
 
       <xacro:unless value="$(optenv HUSKY_LARGE_TOP_PLATE false)">
-        <link name="top_plate_link">
+        <link name="${extra_prefix}top_plate_link">
           <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -151,9 +151,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
         </link>
 
         <!-- Attach top plate -->
-        <joint name="top_plate_joint" type="fixed">
-          <parent link="base_link" />
-          <child link="top_plate_link"/>
+        <joint name="${extra_prefix}top_plate_joint" type="fixed">
+          <parent link="${extra_prefix}base_link" />
+          <child link="${extra_prefix}top_plate_link"/>
           <origin xyz="0.0812 0 0.245" rpy="0 0 0"/>
         </joint>
       </xacro:unless>

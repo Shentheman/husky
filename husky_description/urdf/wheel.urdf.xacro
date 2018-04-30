@@ -25,8 +25,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="husky_wheel">
 
-	<xacro:macro name="husky_wheel" params="wheel_prefix *joint_pose">
-		<link name="${wheel_prefix}_wheel_link">
+	<xacro:macro name="husky_wheel" params="wheel_prefix *joint_pose extra_prefix">
+		<link name="${extra_prefix}${wheel_prefix}_wheel_link">
 			<inertial>
 				<mass value="2.637" />
 				<origin xyz="0 0 0" />
@@ -54,9 +54,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 			<fdir1 value="1 0 0"/>
 		</gazebo>
 
-		<joint name="${wheel_prefix}_wheel" type="continuous">
-			<parent link="base_link"/>
-			<child link="${wheel_prefix}_wheel_link"/>
+		<joint name="${extra_prefix}${wheel_prefix}_wheel" type="continuous">
+			<parent link="${extra_prefix}base_link"/>
+			<child link="${extra_prefix}${wheel_prefix}_wheel_link"/>
 			<xacro:insert_block name="joint_pose"/>
 			<axis xyz="0 1 0" rpy="0 0 0" />
 		</joint>
@@ -66,7 +66,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 			<actuator name="${wheel_prefix}_wheel_motor">
 				<mechanicalReduction>1</mechanicalReduction>
 			</actuator>
-			<joint name="${wheel_prefix}_wheel">
+			<joint name="${extra_prefix}${wheel_prefix}_wheel">
 				<hardwareInterface>VelocityJointInterface</hardwareInterface>
 			</joint>
 		</transmission>
