@@ -50,7 +50,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <xacro:property name="wheel_length" value="0.1143" />
   <xacro:property name="wheel_radius" value="0.1651" />
 
-  <xacro:macro name="husky_robot" params="extra_prefix" >
+  <xacro:macro name="husky_robot"
+    params="extra_prefix laser_enabled ur5_enabled kinect_enabled" >
 
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="${extra_prefix}base_link">
@@ -125,7 +126,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
     <xacro:husky_decorate extra_prefix="${extra_prefix}" />
 
-    <xacro:if value="$(arg ur5_enabled)">
+    <xacro:if value="${ur5_enabled}">
 
       <xacro:property name="reflect" value="-1" />
 
@@ -141,7 +142,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
     </xacro:if>
 
-    <xacro:if value="$(arg laser_enabled)">
+    <xacro:if value="${laser_enabled}">
 
       <sick_lms1xx_mount prefix="${extra_prefix}base" topic="scan"/>
 
@@ -154,7 +155,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
     </xacro:if>
 
-    <xacro:if value="$(arg kinect_enabled)">
+    <xacro:if value="${kinect_enabled}">
 
       <xacro:sensor_arch prefix="${extra_prefix}" parent="top_plate_link">
         <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
@@ -168,6 +169,5 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <xacro:kinect_camera prefix="${extra_prefix}camera" />
     </xacro:if>
 
-    <xacro:include filename="$(optenv HUSKY_URDF_EXTRAS empty.urdf)" />
   </xacro:macro>
 </robot>
