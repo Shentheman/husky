@@ -10,7 +10,6 @@
   <!-- <rosparam command="load" file="$(find husky_control)/config/control.yaml" /> -->
   <rosparam command="load" file="$(find husky_control)/config/control.yaml" ns="$(arg namespace_with_slash)" />
 
-
   <group ns="$(arg namespace_with_slash)">
     <node name="base_controller_spawner" pkg="controller_manager" type="spawner" args="husky_joint_publisher husky_velocity_controller --shutdown-timeout 3"/>
   </group>

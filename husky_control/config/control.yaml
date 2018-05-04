@@ -2,6 +2,18 @@ husky_joint_publisher:
   type: "joint_state_controller/JointStateController"
   publish_rate: 50
 
+
+
+# joint_names is used for [`cob_gazebo_ros_control`](https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control).
+# In raw3-6, [`cob_common/cob_description/urdf/ur_arm/ur10_arm.urdf.xacro`](https://github.com/Shentheman/cob_common/blob/10fa859c06a425d28ff215cdf0a167bd3f57153f/cob_description/urdf/ur_arm/ur10_arm.urdf.xacro#L24) extracts the [`${name}/joint_names`](https://github.com/Shentheman/cob_robots/blob/5e76a75d8709e6a50a6cdbc84c13ae04ff731c14/cob_hardware_config/robots/raw3-6/config/arm_controller.yaml#L2).
+joint_names: [
+  "base_front_left_wheel",
+  "base_front_right_wheel",
+  "base_rear_left_wheel",
+  "base_rear_right_wheel"]
+
+
+
 husky_velocity_controller:
   type: "diff_drive_controller/DiffDriveController"
   left_wheel: ['base_front_left_wheel', 'base_rear_left_wheel']

@@ -26,6 +26,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="husky_wheel">
 
 	<xacro:macro name="husky_wheel" params="wheel_prefix *joint_pose extra_prefix">
+
+		<!-- https://answers.ros.org/question/216975/loading-variables-with-xacroinclude/ -->
+		<xacro:include filename="$(find husky_description)/urdf/wheel.transmission.gazebo.xacro" />
+		<xacro:husky_wheel_transmission_gazebo wheel_prefix="${wheel_prefix}" extra_prefix="${extra_prefix}" />
+
+
 		<link name="${extra_prefix}${wheel_prefix}_wheel_link">
 			<inertial>
 				<mass value="2.637" />
@@ -46,7 +52,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 			</collision>
 		</link>
 
-		<gazebo reference="${wheel_prefix}_wheel_link">
+		<gazebo reference="${extra_prefix}${wheel_prefix}_wheel_link">
 			<mu1 value="1.0"/>
 			<mu2 value="1.0"/>
 			<kp value="10000000.0" />
@@ -60,16 +66,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 			<xacro:insert_block name="joint_pose"/>
 			<axis xyz="0 1 0" rpy="0 0 0" />
 		</joint>
-
-		<transmission name="${wheel_prefix}_wheel_trans" type="SimpleTransmission">
-			<type>transmission_interface/SimpleTransmission</type>
-			<actuator name="${wheel_prefix}_wheel_motor">
-				<mechanicalReduction>1</mechanicalReduction>
-			</actuator>
-			<joint name="${extra_prefix}${wheel_prefix}_wheel">
-				<hardwareInterface>VelocityJointInterface</hardwareInterface>
-			</joint>
-		</transmission>
 
 	</xacro:macro>
 </robot>
